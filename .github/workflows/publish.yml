@@ -1,0 +1,54 @@
+name: Publish ClickOnce
+
+# 1. This workflow runs when you push a version tag
+on:
+  push:
+    tags:
+      - 'v*'
+
+# 2. Give the workflow permission to publish to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+
+  # 3. Build and package the app
+  publish:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build ClickOnce package
+        run: |
+          dotnet publish OptimizelyQuickContent/OptimizelyQuickContent.csproj `
+            -c Release `
+            -p:PublishProtocol=ClickOnce `
+            -p:PublishDir=../publish/
+
+      - name: Upload for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: publish/
+
+  # 4. Deploy the package to GitHub Pages
+  deploy:
+    needs: publish
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

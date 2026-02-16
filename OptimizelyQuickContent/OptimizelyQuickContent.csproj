@@ -6,6 +6,18 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+
+    <!-- ClickOnce -->
+    <PublishProtocol>ClickOnce</PublishProtocol>
+    <InstallMode>Install</InstallMode>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <ApplicationVersion>1.0.0.*</ApplicationVersion>
+    <PublishUrl>https://fwall-bit.github.io/OptimizelyQuickContent/</PublishUrl>
+    <InstallUrl>https://fwall-bit.github.io/OptimizelyQuickContent/</InstallUrl>
+    <SupportUrl>https://github.com/fwall-bit/OptimizelyQuickContent/issues</SupportUrl>
+    <Product>Optimizely Quick Content</Product>
+    <Publishers>fwall-bit</Publishers>
   </PropertyGroup>
 
 </Project>
