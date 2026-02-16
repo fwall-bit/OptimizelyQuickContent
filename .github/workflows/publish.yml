@@ -30,9 +30,7 @@ jobs:
       - name: Build ClickOnce package
         run: |
           dotnet publish OptimizelyQuickContent/OptimizelyQuickContent.csproj `
-            -c Release `
-            -p:PublishProtocol=ClickOnce `
-            -p:PublishDir=../publish/
+            -p:PublishProfile=ClickOnceProfile
 
       - name: Upload for Pages
         uses: actions/upload-pages-artifact@v3
