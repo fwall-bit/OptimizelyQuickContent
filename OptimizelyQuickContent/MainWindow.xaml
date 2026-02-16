@@ -1,0 +1,207 @@
+﻿<Window x:Class="OptimizelyQuickContent.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OptimizelyQuickContent"
+        mc:Ignorable="d"
+        Title="Optimizely Quick Content"
+        Height="680" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PrimaryBrush}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>   <!-- Header -->
+            <RowDefinition Height="Auto"/>   <!-- Connection selector -->
+            <RowDefinition Height="Auto"/>   <!-- Connection form -->
+            <RowDefinition Height="*"/>      <!-- Request area -->
+            <RowDefinition Height="Auto"/>   <!-- Status bar -->
+        </Grid.RowDefinitions>
+
+        <!-- ═══════════ HEADER ═══════════ -->
+        <TextBlock Grid.Row="0"
+                   Text="Optimizely Quick Content"
+                   FontSize="22" FontWeight="Bold"
+                   Foreground="{StaticResource ForegroundBrush}"
+                   Margin="0,0,0,20"/>
+
+        <!-- ═══════════ CONNECTION SELECTOR ═══════════ -->
+        <Border Grid.Row="1"
+                Background="{StaticResource SurfaceBrush}"
+                CornerRadius="8" Padding="16" Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                    <Label Content="Active Connection"/>
+                    <ComboBox x:Name="ConnectionsComboBox"
+                              DisplayMemberPath="DisplayName"
+                              SelectionChanged="ConnectionsComboBox_SelectionChanged"/>
+                </StackPanel>
+
+                <Button Grid.Column="1" Content="⚡ Connect"
+                        x:Name="ConnectButton"
+                        Style="{StaticResource AccentButton}"
+                        VerticalAlignment="Bottom" Margin="0,0,6,0"
+                        IsEnabled="False"
+                        Click="Connect_Click"/>
+
+                <Button Grid.Column="2" Content="＋ New"
+                        Style="{StaticResource AccentButton}"
+                        VerticalAlignment="Bottom" Margin="0,0,6,0"
+                        Click="NewConnection_Click"/>
+
+                <Button Grid.Column="3" Content="✎ Edit"
+                        Style="{StaticResource GhostButton}"
+                        VerticalAlignment="Bottom" Margin="0,0,6,0"
+                        Click="EditConnection_Click"/>
+
+                <Button Grid.Column="4" Content="✕ Remove"
+                        Style="{StaticResource DangerButton}"
+                        VerticalAlignment="Bottom"
+                        Click="RemoveConnection_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- ═══════════ CONNECTION FORM (Add / Edit) ═══════════ -->
+        <Border Grid.Row="2"
+                x:Name="ConnectionFormPanel"
+                Background="{StaticResource SurfaceBrush}"
+                CornerRadius="8" Padding="16" Margin="0,0,0,12"
+                Visibility="Collapsed">
+            <StackPanel>
+                <TextBlock x:Name="FormTitle"
+                           Text="New Connection"
+                           FontSize="15" FontWeight="SemiBold"
+                           Foreground="{StaticResource ForegroundBrush}"
+                           Margin="0,0,0,12"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0 -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,10">
+                        <Label Content="Display Name"/>
+                        <TextBox x:Name="DisplayNameTextBox"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,10">
+                        <Label Content="Base URL"/>
+                        <TextBox x:Name="BaseUrlTextBox"/>
+                    </StackPanel>
+
+                    <!-- Row 1 -->
+                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,10">
+                        <Label Content="Client ID"/>
+                        <TextBox x:Name="ClientIdTextBox"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,10">
+                        <Label Content="Client Secret"/>
+                        <TextBox x:Name="ClientSecretTextBox"/>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                    <Button Content="Cancel"
+                            Style="{StaticResource GhostButton}"
+                            Margin="0,0,8,0"
+                            Click="CancelForm_Click"/>
+                    <Button Content="Save Connection"
+                            Style="{StaticResource AccentButton}"
+                            Click="SaveConnection_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- ═══════════ API REQUEST AREA ═══════════ -->
+        <Border Grid.Row="3"
+                x:Name="RequestPanel"
+                Background="{StaticResource SurfaceBrush}"
+                CornerRadius="8" Padding="16"
+                Visibility="Collapsed">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="API Request Body (JSON)"
+                           FontSize="14" FontWeight="SemiBold"
+                           Foreground="{StaticResource ForegroundBrush}"
+                           Margin="0,0,0,8"/>
+
+                <TextBox Grid.Row="1"
+                         x:Name="RequestBodyTextBox"
+                         AcceptsReturn="True"
+                         AcceptsTab="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         FontFamily="Cascadia Code, Consolas, Courier New"
+                         FontSize="13"/>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                            HorizontalAlignment="Right" Margin="0,12,0,0">
+                    <Button Content="Send Request"
+                            Style="{StaticResource AccentButton}"
+                            HorizontalAlignment="Right"
+                            Margin="0,12,0,0"
+                            Click="SendRequest_Click"/>
+                </StackPanel>
+
+                <Grid Grid.Row="3"
+                      x:Name="ResponseHeader"
+                      Margin="0,16,0,8"
+                      Visibility="Collapsed">
+                    <TextBlock Text="Response"
+                               FontSize="14" FontWeight="SemiBold"
+                               Foreground="{StaticResource ForegroundBrush}"
+                               VerticalAlignment="Center"/>
+                    <Button Content="✕"
+                            Style="{StaticResource GhostButton}"
+                            HorizontalAlignment="Right"
+                            Padding="8,4"
+                            Click="CloseResponse_Click"/>
+                </Grid>
+
+                <TextBox Grid.Row="4"
+                         x:Name="ResponseTextBox"
+                         IsReadOnly="True"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         MaxHeight="200"
+                         FontFamily="Cascadia Code, Consolas, Courier New"
+                         FontSize="13"
+                         Visibility="Collapsed"/>
+            </Grid>
+        </Border>
+
+        <!-- ═══════════ STATUS BAR ═══════════ -->
+        <TextBlock Grid.Row="4"
+                   x:Name="StatusText"
+                   Foreground="{StaticResource MutedBrush}"
+                   FontSize="12"
+                   Margin="0,10,0,0"
+                   Text="No connection selected."/>
+    </Grid>
+</Window>
