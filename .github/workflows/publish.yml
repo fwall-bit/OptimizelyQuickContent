@@ -35,7 +35,7 @@ jobs:
       - name: Upload for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: publish/
+          path: OptimizelyQuickContent/bin/publish/
 
   # 4. Deploy the package to GitHub Pages
   deploy:
