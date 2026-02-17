@@ -74,10 +74,10 @@ services.AddOpenIDConnectUI();
 ```json
 {
   "name": "Sample Page",
-  "contentType": "Page",
-  "language": "en",
-  "parentLink": "00000000-0000-0000-0000-000000000000",
-  "status": "Published",
+  "language": { "name": "en" },
+  "contentType": ["ContentPage(1)"],
+  "parentLink": { "id": 662 },
+  "status": "CheckedOut",
   "pageTitle": "Sample Page Title"
 }
 ```
