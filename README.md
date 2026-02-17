@@ -78,10 +78,7 @@ services.AddOpenIDConnectUI();
   "language": "en",
   "parentLink": "00000000-0000-0000-0000-000000000000",
   "status": "Published",
-  "property": {
-    "Title": "This is a sample page",
-    "Content": "<p>Hello, world!</p>"
-  }
+  "pageTitle": "Sample Page Title"
 }
 ```
 
