@@ -11,25 +11,18 @@ A WPF desktop tool for creating content in Optimizely CMS via the Content Manage
 #### 1. Install the OpenID Connect package
 
 #### 2. Register the Content Management API in `Startup.cs`
-`services.AddContentManagementApi(OpenIDConnectOptionsDefaults.AuthenticationScheme, options => {
-
+```
+services.AddContentManagementApi(OpenIDConnectOptionsDefaults.AuthenticationScheme, options => {
    options.DisableScopeValidation = true;
-   
 });
-
 services.AddOpenIDConnect<ApplicationUser>(
-
    useDevelopmentCertificate: true,
-   
    signingCertificate: null,
-   
    encryptionCertificate: null,
-   
    createSchema: true
-   
 );
-
-services.AddOpenIDConnectUI();`
+services.AddOpenIDConnectUI();
+```
 
 #### 3. Create an OpenID Connect Application
 
